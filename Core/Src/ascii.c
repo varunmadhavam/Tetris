@@ -30,10 +30,10 @@ void updateBuffer(void) {
 	max_7219_buffer[i][1]=0b11000000;
 	max_7219_buffer[i][2]=0b11000000;
 	max_7219_buffer[i][3]=0b11000000;
-	max_7219_buffer[i][4]=0b11111100;
-	max_7219_buffer[i][5]=0b11000010;
-	max_7219_buffer[i][6]=0b11000010;
-	max_7219_buffer[i][7]=0b11111100;
+	max_7219_buffer[i][4]=0b11000000;
+	max_7219_buffer[i][5]=0b11000000;
+	max_7219_buffer[i][6]=0b11111111;
+	max_7219_buffer[i][7]=0b11111111;
 	i++;
 	if(i==4)
 		i=0;

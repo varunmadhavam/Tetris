@@ -1,7 +1,8 @@
 shifter.c:8:6:init_shifter	8	static
-shifter.c:15:6:shiftout	24	static
-shifter.c:30:6:shiftout_r	24	static
-shifter.c:45:6:shiftoutBuffer	24	static
-shifter.c:62:6:shiftout_spi	24	static
-shifter.c:71:6:shiftout_spi_r	24	static
-shifter.c:85:6:MX_SPI1_Init	8	static
+shifter.c:16:6:shiftout	24	static
+shifter.c:31:6:shiftout_r	24	static
+shifter.c:46:6:shiftoutBuffer	24	static
+shifter.c:63:6:shiftout_spi	24	static
+shifter.c:72:6:shiftout_spi_r	24	static
+shifter.c:85:6:MX_GPIO_Init	48	static
+shifter.c:103:6:MX_SPI1_Init	8	static
