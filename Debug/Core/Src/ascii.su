@@ -1,3 +1,0 @@
-ascii.c:15:6:printBuffer	32	static
-ascii.c:26:6:updateBuffer	8	static
-ascii.c:42:6:initBuffer	16	static
