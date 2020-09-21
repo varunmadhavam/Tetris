@@ -9,5 +9,6 @@ void max_load_high(void);
 void max_send_data(uint16_t data[]);
 void max_send_buffer(uint8_t data[MAX_DEVICES][8]);
 void max_send_data_r(uint16_t data[]);
-
+void max_send_data_spi(uint16_t data[]);
+void max_send_data_spi_r(uint16_t data[]);
 #endif

@@ -24,6 +24,8 @@ Core/Src/ascii.o: ../Core/Src/ascii.c \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_flash_ex.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_pwr.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_pwr_ex.h \
+ ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi.h \
+ ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi_ex.h \
  ../Core/Inc/configs.h ../Core/Inc/max7219.h ../Core/Inc/configs.h \
  ../Core/Inc/ascii.h
 
@@ -76,6 +78,10 @@ Core/Src/ascii.o: ../Core/Src/ascii.c \
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_pwr.h:
 
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_pwr_ex.h:
+
+../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi.h:
+
+../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi_ex.h:
 
 ../Core/Inc/configs.h:
 

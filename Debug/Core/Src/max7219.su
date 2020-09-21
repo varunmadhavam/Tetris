@@ -1,6 +1,8 @@
 max7219.c:7:6:max_init	24	static
-max7219.c:28:6:max_load_low	8	static
-max7219.c:32:6:max_load_high	8	static
-max7219.c:36:6:max_send_data	16	static
-max7219.c:42:6:max_send_data_r	16	static
-max7219.c:48:6:max_send_buffer	16	static
+max7219.c:31:6:max_load_low	8	static
+max7219.c:35:6:max_load_high	8	static
+max7219.c:39:6:max_send_data	16	static
+max7219.c:45:6:max_send_data_r	16	static
+max7219.c:51:6:max_send_data_spi	16	static
+max7219.c:57:6:max_send_data_spi_r	16	static
+max7219.c:63:6:max_send_buffer	16	static

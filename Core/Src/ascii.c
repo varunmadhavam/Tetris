@@ -18,7 +18,8 @@ void printBuffer(void) {
 		for(uint8_t j=0;j<MAX_DEVICES;j++){
 			data[j]=((uint16_t)(i<<8))|(max_7219_buffer[j][i-1]);
 		}
-		max_send_data_r(data);
+		//max_send_data_r(data);
+		max_send_data_spi_r(data);
 	}
 }
 

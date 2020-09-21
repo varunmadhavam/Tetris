@@ -18,5 +18,7 @@
 #define CLKP GPIO_PIN_15
 #define LOADP GPIO_PIN_10
 
+void Error_Handler(void);
+
 
 #endif /* INC_CONFIGS_H_ */

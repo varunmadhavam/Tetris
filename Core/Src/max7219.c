@@ -11,18 +11,21 @@ void max_init(void) {
 		for(uint8_t j=0;j<MAX_DEVICES;j++) {
 			serialData[j]=(uint16_t)(i<<8)|((uint16_t)0x0000);
 		}
-		max_send_data(serialData);
+		//max_send_data(serialData);
+		max_send_data_spi(serialData);
 	}
 
 	for(uint8_t j=0;j<MAX_DEVICES;j++) {
 				serialData[j]=0x0B07;
 			}
-	max_send_data(serialData);
+	//max_send_data(serialData);
+	max_send_data_spi(serialData);
 
 	for(uint8_t j=0;j<MAX_DEVICES;j++) {
 				serialData[j]=0x0C01;
 			}
-	max_send_data(serialData);
+	//max_send_data(serialData);
+	max_send_data_spi(serialData);
 }
 
 void max_load_low(void) {
@@ -42,6 +45,18 @@ void max_send_data(uint16_t data[]) {
 void max_send_data_r(uint16_t data[]) {
 	max_load_low();
 	shiftout_r(data);
+	max_load_high();
+}
+
+void max_send_data_spi(uint16_t data[]) {
+	max_load_low();
+	shiftout_spi(data);
+	max_load_high();
+}
+
+void max_send_data_spi_r(uint16_t data[]) {
+	max_load_low();
+	shiftout_spi_r(data);
 	max_load_high();
 }
 
