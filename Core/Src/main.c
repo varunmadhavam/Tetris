@@ -2,6 +2,7 @@
 #include "main.h"
 #include "ascii.h"
 #include "max7219.h"
+#include "configs.h"
 
 
 void SystemClock_Config(void);
@@ -15,7 +16,7 @@ int main(void)
   {
 	  updateBuffer();
 	  printBuffer();
-	  HAL_Delay(80);
+	  HAL_Delay(100);
   }
 
 }
@@ -38,8 +39,7 @@ void SystemClock_Config(void)
     Error_Handler();
   }
 
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1;
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK|RCC_CLOCKTYPE_PCLK1;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;

@@ -35,15 +35,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  15 .debug_ranges 00000680  00000000  00000000  00028e28  2**3
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macro  0001659c  00000000  00000000  000294a8  2**0
+ 16 .debug_macro  000165a0  00000000  00000000  000294a8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   00006ffc  00000000  00000000  0003fa44  2**0
+ 17 .debug_line   00006ffc  00000000  00000000  0003fa48  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    0008ba19  00000000  00000000  00046a40  2**0
+ 18 .debug_str    0008ba19  00000000  00000000  00046a44  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  000d2459  2**0
+ 19 .comment      0000007b  00000000  00000000  000d245d  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00001834  00000000  00000000  000d24d4  2**2
+ 20 .debug_frame  00001834  00000000  00000000  000d24d8  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -493,8 +493,8 @@ int main(void)
  80003c0:	f7ff ff70 	bl	80002a4 <updateBuffer>
 	  printBuffer();
  80003c4:	f7ff ff2a 	bl	800021c <printBuffer>
-	  HAL_Delay(80);
- 80003c8:	2050      	movs	r0, #80	; 0x50
+	  HAL_Delay(100);
+ 80003c8:	2064      	movs	r0, #100	; 0x64
  80003ca:	f000 fb51 	bl	8000a70 <HAL_Delay>
 	  updateBuffer();
  80003ce:	e7f7      	b.n	80003c0 <main+0x10>
