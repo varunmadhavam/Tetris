@@ -4,7 +4,19 @@
 #define MAX_DEVICES 1
 
 void SystemClock_Config(void);
-uint16_t buff[MAX_DEVICES][8];
+uint16_t buff[MAX_DEVICES*8];
+
+void delay_cycles( uint32_t cyc ) {
+  for ( uint32_t d_i = 1000; d_i < cyc; d_i++ )
+  {
+	  asm( "NOP" );
+  }
+}
+
+void clear_buff(void) {
+	for(int i=0;i<MAX_DEVICES*8;i++)
+		buff[i]=0x0000;
+}
 void spi_w16( SPI_TypeDef *SPIx, uint16_t dat[] ) {
   for(int i=0;i<MAX_DEVICES;i++){
 	  while ( !( SPIx->SR & SPI_SR_TXE ) ) {};
@@ -50,18 +62,6 @@ int main(void)
   GPIOA->PUPDR   &= ~(0x2<<(1*2) | 0x2<<(2*2) | 0x2<<(4*2));
   GPIOA->AFR[0]  &= ~(0xff<<(1*4) | 0xff<<(2*4) | 0xff<<(4*4));
 
-  //SPI configs
-  SPI1->CR1 |=  ( SPI_CR1_MSTR | (1<<SPI_CR1_BIDIOE_Pos) );
-  SPI1->CR2 &= ~( SPI_CR2_DS );
-  SPI1->CR2 |=  ( 0xf << SPI_CR2_DS_Pos | SPI_CR2_TXDMAEN | 1<<SPI_CR2_NSSP_Pos | 1<<SPI_CR2_SSOE_Pos );
-
-  SPI1->CR1 |=  ( SPI_CR1_SPE );
-
-  init_max();
-  //spi_w16(SPI1,0x0255);
-  //spi_w16(SPI1,0x03AA);
-
-
   //DMA configs
 
   DMA1_Channel1->CCR &= ~( DMA_CCR_MEM2MEM |
@@ -82,30 +82,52 @@ int main(void)
   DMAMUX1_Channel0->CCR |=  ( 17 << DMAMUX_CxCR_DMAREQ_ID_Pos );
 
   DMA1_Channel1->CMAR  = ( uint32_t )&buff;
-  DMA1_Channel1->CPAR  = ( uint32_t )&( SPI1->DR );
-  DMA1_Channel1->CNDTR = ( uint16_t )MAX_DEVICES*8;
+  DMA1_Channel1->CPAR  = ( uint32_t )&(SPI1->DR);
+  DMA1_Channel1->CNDTR = ( uint16_t )(MAX_DEVICES*8);
 
-  buff[0][0]=0x0100;
-    buff[0][1]=0x0200;
-    buff[0][2]=0x0300;
-    buff[0][3]=0x0400;
-    buff[0][4]=0x0500;
-    buff[0][5]=0x0600;
-    buff[0][6]=0x0700;
-    buff[0][7]=0x0800;
+  //SPI configs
+  SPI1->CR1 |=  ( SPI_CR1_MSTR | (1<<SPI_CR1_BIDIOE_Pos) );
+  SPI1->CR2 &= ~( SPI_CR2_DS );
+  SPI1->CR2 |=  ( 0xf << SPI_CR2_DS_Pos | SPI_CR2_TXDMAEN | 1<<SPI_CR2_NSSP_Pos | 1<<SPI_CR2_SSOE_Pos );
+
+
+
+  SPI1->CR1 |=  ( SPI_CR1_SPE );
+  init_max();
+  //spi_w16(SPI1,0x0255);
+  //spi_w16(SPI1,0x03AA);
+
+
+
+
+    clear_buff();
 
     DMA1_Channel1->CCR |= ( DMA_CCR_EN );
+while(1) {
+    buff[0]=0x0100;
+    buff[1]=0x02ff;
+    buff[2]=0x0300;
+    buff[3]=0x0400;
+    buff[4]=0x0500;
+    buff[5]=0x0600;
+    buff[6]=0x07ff;
+    buff[7]=0x0800;
 
-  buff[0][0]=0x01ff;
-  buff[0][1]=0x0200;
-  buff[0][2]=0x0300;
-  buff[0][3]=0x0400;
-  buff[0][4]=0x0500;
-  buff[0][5]=0x0600;
-  buff[0][6]=0x0700;
-  buff[0][7]=0x08ff;
+    HAL_Delay(100);
+    clear_buff();
 
+    buff[0]=0x01ff;
+    buff[1]=0x0200;
+    buff[2]=0x0300;
+    buff[3]=0x0400;
+    buff[4]=0x0500;
+    buff[5]=0x0600;
+    buff[6]=0x0700;
+    buff[7]=0x08ff;
 
+    HAL_Delay(100);
+    clear_buff();
+}
 
 }
 

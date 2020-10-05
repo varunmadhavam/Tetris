@@ -2,6 +2,7 @@
 "Core/Src/main.o"
 "Core/Src/max7219.o"
 "Core/Src/shifter.o"
+"Core/Src/stm32g0xx_it.o"
 "Core/Src/syscalls.o"
 "Core/Src/sysmem.o"
 "Core/Src/system_stm32g0xx.o"
