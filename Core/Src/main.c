@@ -1,8 +1,36 @@
 
 #include "main.h"
 #include "stm32g071xx.h"
+#define MAX_DEVICES 1
 
 void SystemClock_Config(void);
+
+void spi_w16( SPI_TypeDef *SPIx, uint16_t dat ) {
+  // Wait for TXE 'transmit buffer empty' bit to be set.
+  while ( !( SPIx->SR & SPI_SR_TXE ) ) {};
+  // Send the bytes.
+  *( uint16_t* )&( SPIx->DR ) = dat;
+}
+
+void init_max(void) {
+	uint16_t serialData[MAX_DEVICES];
+	for(uint8_t i=0;i<15;i++){
+		for(uint8_t j=0;j<MAX_DEVICES;j++) {
+			serialData[j]=(uint16_t)(i<<8)|((uint16_t)0x0000);
+		}
+		spi_w16(SPI1,serialData[0]);
+	}
+
+	for(uint8_t j=0;j<MAX_DEVICES;j++) {
+				serialData[j]=0x0B07;
+			}
+	spi_w16(SPI1,serialData[0]);
+
+	for(uint8_t j=0;j<MAX_DEVICES;j++) {
+				serialData[j]=0x0C01;
+			}
+	spi_w16(SPI1,serialData[0]);
+}
 
 int main(void)
 {
@@ -22,7 +50,13 @@ int main(void)
   GPIOA->AFR[0]  &= ~(0xff<<(1*4) | 0xff<<(2*4) | 0xff<<(4*4));
 
   //SPI configs
+  SPI1->CR1 |=  ( SPI_CR1_MSTR | (1<<SPI_CR1_BIDIOE_Pos) );
+  SPI1->CR2 &= ~( SPI_CR2_DS );
+  SPI1->CR2 |=  ( 0x7 << SPI_CR2_DS_Pos | SPI_CR2_TXDMAEN | 1<<SPI_CR2_NSSP_Pos | 1<<SPI_CR2_SSOE_Pos );
+  SPI1->CR1 |=  ( SPI_CR1_SPE );
 
+  init_max();
+  spi_w16(SPI1,0xff01);
 
 
   //DMA configs
