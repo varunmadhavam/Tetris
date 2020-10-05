@@ -52,11 +52,12 @@ int main(void)
   //SPI configs
   SPI1->CR1 |=  ( SPI_CR1_MSTR | (1<<SPI_CR1_BIDIOE_Pos) );
   SPI1->CR2 &= ~( SPI_CR2_DS );
-  SPI1->CR2 |=  ( 0x7 << SPI_CR2_DS_Pos | SPI_CR2_TXDMAEN | 1<<SPI_CR2_NSSP_Pos | 1<<SPI_CR2_SSOE_Pos );
+  SPI1->CR2 |=  ( 0xf << SPI_CR2_DS_Pos | SPI_CR2_TXDMAEN | 1<<SPI_CR2_NSSP_Pos | 1<<SPI_CR2_SSOE_Pos );
   SPI1->CR1 |=  ( SPI_CR1_SPE );
 
   init_max();
-  spi_w16(SPI1,0xff01);
+  spi_w16(SPI1,0x0255);
+  spi_w16(SPI1,0x03AA);
 
 
   //DMA configs
