@@ -1522,7 +1522,7 @@ while(1) {
  8000af4:	4b6b      	ldr	r3, [pc, #428]	; (8000ca4 <main+0x840>)
  8000af6:	223c      	movs	r2, #60	; 0x3c
  8000af8:	775a      	strb	r2, [r3, #29]
-    buff_data[6]=0b00000100;buff_data[14]=0b00000010;buff_data[22]=0b00100000;buff_data[30]=0b00000000;
+    buff_data[6]=0b00000100;buff_data[14]=0b00000010;buff_data[22]=0b00000000;buff_data[30]=0b00000000;
  8000afa:	4b6a      	ldr	r3, [pc, #424]	; (8000ca4 <main+0x840>)
  8000afc:	2204      	movs	r2, #4
  8000afe:	719a      	strb	r2, [r3, #6]
@@ -1530,7 +1530,7 @@ while(1) {
  8000b02:	2202      	movs	r2, #2
  8000b04:	739a      	strb	r2, [r3, #14]
  8000b06:	4b67      	ldr	r3, [pc, #412]	; (8000ca4 <main+0x840>)
- 8000b08:	2220      	movs	r2, #32
+ 8000b08:	2200      	movs	r2, #0
  8000b0a:	759a      	strb	r2, [r3, #22]
  8000b0c:	4b65      	ldr	r3, [pc, #404]	; (8000ca4 <main+0x840>)
  8000b0e:	2200      	movs	r2, #0
@@ -1703,7 +1703,7 @@ while(1) {
  8000c40:	4b18      	ldr	r3, [pc, #96]	; (8000ca4 <main+0x840>)
  8000c42:	2242      	movs	r2, #66	; 0x42
  8000c44:	769a      	strb	r2, [r3, #26]
-    buff_data[3]=0b00000000;buff_data[11]=0b11111111;buff_data[19]=0b00000000;buff_data[27]=0b01000010;
+    buff_data[3]=0b00000000;buff_data[11]=0b11111111;buff_data[19]=0b00010000;buff_data[27]=0b01000010;
  8000c46:	4b17      	ldr	r3, [pc, #92]	; (8000ca4 <main+0x840>)
  8000c48:	2200      	movs	r2, #0
  8000c4a:	70da      	strb	r2, [r3, #3]
@@ -1711,12 +1711,12 @@ while(1) {
  8000c4e:	22ff      	movs	r2, #255	; 0xff
  8000c50:	72da      	strb	r2, [r3, #11]
  8000c52:	4b14      	ldr	r3, [pc, #80]	; (8000ca4 <main+0x840>)
- 8000c54:	2200      	movs	r2, #0
+ 8000c54:	2210      	movs	r2, #16
  8000c56:	74da      	strb	r2, [r3, #19]
  8000c58:	4b12      	ldr	r3, [pc, #72]	; (8000ca4 <main+0x840>)
  8000c5a:	2242      	movs	r2, #66	; 0x42
  8000c5c:	76da      	strb	r2, [r3, #27]
-    buff_data[4]=0b00000000;buff_data[12]=0b00000000;buff_data[20]=0b00000000;buff_data[28]=0b01000010;
+    buff_data[4]=0b00000000;buff_data[12]=0b00000000;buff_data[20]=0b00100000;buff_data[28]=0b01000010;
  8000c5e:	4b11      	ldr	r3, [pc, #68]	; (8000ca4 <main+0x840>)
  8000c60:	2200      	movs	r2, #0
  8000c62:	711a      	strb	r2, [r3, #4]
@@ -1724,7 +1724,7 @@ while(1) {
  8000c66:	2200      	movs	r2, #0
  8000c68:	731a      	strb	r2, [r3, #12]
  8000c6a:	4b0e      	ldr	r3, [pc, #56]	; (8000ca4 <main+0x840>)
- 8000c6c:	2200      	movs	r2, #0
+ 8000c6c:	2220      	movs	r2, #32
  8000c6e:	751a      	strb	r2, [r3, #20]
  8000c70:	4b0c      	ldr	r3, [pc, #48]	; (8000ca4 <main+0x840>)
  8000c72:	2242      	movs	r2, #66	; 0x42
