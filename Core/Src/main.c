@@ -1,10 +1,11 @@
+#include "stm32g0xx.h"
+#include "rcc.h"
+#include "systick.h"
+#include "delay.h"
 
-#include "main.h"
-#include "stm32g071xx.h"
 #define MAX_DEVICES 4
 #define ANIMDELAY 110
 
-void SystemClock_Config(void);
 
 uint16_t buff[MAX_DEVICES*8];
 uint8_t buff_data[MAX_DEVICES*8];
@@ -69,8 +70,8 @@ void init_max(void) {
 
 int main(void)
 {
-  HAL_Init();
-  SystemClock_Config();
+  sysclock_config();//call the system clock configuration function. Clock should be set to 64Mhz now.
+  systick_enable();//set the systick timer to interrupt every 1ms.
 
   //GPIOA configs
 
@@ -110,14 +111,14 @@ int main(void)
   DMA1_Channel1->CNDTR = ( uint16_t )(MAX_DEVICES*8);
 
   //SPI configs
-  SPI1->CR1 |=  ( SPI_CR1_MSTR | (1<<SPI_CR1_BIDIOE_Pos) );
+  SPI1->CR1 |=  ( SPI_CR1_MSTR | (1<<SPI_CR1_BIDIOE_Pos) | (1<<4) );
   SPI1->CR2 &= ~( SPI_CR2_DS );
   SPI1->CR2 |=  ( 0xf << SPI_CR2_DS_Pos | SPI_CR2_TXDMAEN | 1<<SPI_CR2_NSSP_Pos | 1<<SPI_CR2_SSOE_Pos );
 
   SPI1->CR1 |=  ( SPI_CR1_SPE );
   init_max();
 
-  //HAL_Delay(500);
+  //DelayMS(500);
   clear_buff();
 
   DMA1_Channel1->CCR |= ( DMA_CCR_EN );
@@ -133,7 +134,7 @@ while(1) {
     buff_data[6]=0b00001000;buff_data[14]=0b00010000;buff_data[22]=0b00000000;buff_data[30]=0b00000000;
     buff_data[7]=0b00000000;buff_data[15]=0b00010000;buff_data[23]=0b00000000;buff_data[31]=0b00000000;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
     buff_data[0]=0b00100000;buff_data[8] =0b00010000;buff_data[16]=0b00000010;buff_data[24]=0b00000000;
     buff_data[1]=0b10000000;buff_data[9] =0b00010000;buff_data[17]=0b00000000;buff_data[25]=0b00000000;
     buff_data[2]=0b00000000;buff_data[10]=0b00010000;buff_data[18]=0b00000000;buff_data[26]=0b00000000;
@@ -143,7 +144,7 @@ while(1) {
     buff_data[6]=0b00001100;buff_data[14]=0b00010000;buff_data[22]=0b00000000;buff_data[30]=0b00000000;
     buff_data[7]=0b00000000;buff_data[15]=0b00010000;buff_data[23]=0b00000000;buff_data[31]=0b00000000;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
     buff_data[0]=0b00100000;buff_data[8] =0b00010000;buff_data[16]=0b00000100;buff_data[24]=0b00000000;
     buff_data[1]=0b00000000;buff_data[9] =0b00010000;buff_data[17]=0b00000000;buff_data[25]=0b00000000;
     buff_data[2]=0b00000000;buff_data[10]=0b00010000;buff_data[18]=0b00000000;buff_data[26]=0b00000000;
@@ -153,7 +154,7 @@ while(1) {
     buff_data[6]=0b00001100;buff_data[14]=0b00010000;buff_data[22]=0b00000000;buff_data[30]=0b00000000;
     buff_data[7]=0b00000000;buff_data[15]=0b00010000;buff_data[23]=0b00000000;buff_data[31]=0b00000000;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
     buff_data[0]=0b00000000;buff_data[8] =0b00010000;buff_data[16]=0b00001000;buff_data[24]=0b00000000;
     buff_data[1]=0b00000000;buff_data[9] =0b00010000;buff_data[17]=0b00000000;buff_data[25]=0b00000000;
     buff_data[2]=0b00100000;buff_data[10]=0b00010000;buff_data[18]=0b00000000;buff_data[26]=0b00000000;
@@ -163,7 +164,7 @@ while(1) {
     buff_data[6]=0b00001100;buff_data[14]=0b00010000;buff_data[22]=0b00000000;buff_data[30]=0b00000000;
     buff_data[7]=0b00000000;buff_data[15]=0b00010000;buff_data[23]=0b00000000;buff_data[31]=0b00000000;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
 
     buff_data[0]=0b00000000;buff_data[8] =0b10000000;buff_data[16]=0b00100000;buff_data[24]=0b00000000;
     buff_data[1]=0b00000000;buff_data[9] =0b01000000;buff_data[17]=0b00000000;buff_data[25]=0b00000000;
@@ -174,7 +175,7 @@ while(1) {
     buff_data[6]=0b00000000;buff_data[14]=0b00000010;buff_data[22]=0b00000000;buff_data[30]=0b00000000;
     buff_data[7]=0b10000000;buff_data[15]=0b00000001;buff_data[23]=0b00000000;buff_data[31]=0b00000000;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
     buff_data[0]=0b00000000;buff_data[8] =0b10000000;buff_data[16]=0b01000001;buff_data[24]=0b00000000;
     buff_data[1]=0b00000000;buff_data[9] =0b01000000;buff_data[17]=0b00000000;buff_data[25]=0b00000000;
     buff_data[2]=0b00000000;buff_data[10]=0b00100000;buff_data[18]=0b00000000;buff_data[26]=0b00111100;
@@ -184,7 +185,7 @@ while(1) {
     buff_data[6]=0b00001100;buff_data[14]=0b00000010;buff_data[22]=0b00000000;buff_data[30]=0b00000000;
     buff_data[7]=0b10000000;buff_data[15]=0b00000001;buff_data[23]=0b00000000;buff_data[31]=0b00000000;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
     buff_data[0]=0b00100000;buff_data[8] =0b10000000;buff_data[16]=0b01000010;buff_data[24]=0b00000000;
     buff_data[1]=0b00000000;buff_data[9] =0b01000000;buff_data[17]=0b00000000;buff_data[25]=0b00000000;
     buff_data[2]=0b00000000;buff_data[10]=0b00100000;buff_data[18]=0b00000000;buff_data[26]=0b00111100;
@@ -194,7 +195,7 @@ while(1) {
     buff_data[6]=0b00000100;buff_data[14]=0b00000010;buff_data[22]=0b00000000;buff_data[30]=0b00000000;
     buff_data[7]=0b00000000;buff_data[15]=0b00000001;buff_data[23]=0b00000000;buff_data[31]=0b00000000;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
     buff_data[0]=0b00000000;buff_data[8] =0b10000000;buff_data[16]=0b01000100;buff_data[24]=0b00000000;
     buff_data[1]=0b00000000;buff_data[9] =0b01000000;buff_data[17]=0b00000000;buff_data[25]=0b00000000;
     buff_data[2]=0b00100000;buff_data[10]=0b00100000;buff_data[18]=0b00000000;buff_data[26]=0b00111100;
@@ -204,7 +205,7 @@ while(1) {
     buff_data[6]=0b00001100;buff_data[14]=0b00000010;buff_data[22]=0b00000000;buff_data[30]=0b00000000;
     buff_data[7]=0b00000000;buff_data[15]=0b00000001;buff_data[23]=0b00000000;buff_data[31]=0b00000000;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
 
 
     buff_data[0]=0b00000000;buff_data[8] =0b00000000;buff_data[16]=0b01001000;buff_data[24]=0b00000000;
@@ -216,7 +217,7 @@ while(1) {
     buff_data[6]=0b00000000;buff_data[14]=0b00000000;buff_data[22]=0b00000000;buff_data[30]=0b01111110;
     buff_data[7]=0b00000001;buff_data[15]=0b00000000;buff_data[23]=0b00000000;buff_data[31]=0b00000000;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
     buff_data[0]=0b00000000;buff_data[8] =0b00000000;buff_data[16]=0b01010000;buff_data[24]=0b00000000;
     buff_data[1]=0b00000000;buff_data[9] =0b00000000;buff_data[17]=0b00000000;buff_data[25]=0b01111110;
     buff_data[2]=0b00000000;buff_data[10]=0b00000000;buff_data[18]=0b00000000;buff_data[26]=0b01000010;
@@ -226,7 +227,7 @@ while(1) {
     buff_data[6]=0b00000000;buff_data[14]=0b00000000;buff_data[22]=0b00000000;buff_data[30]=0b01111110;
     buff_data[7]=0b10000000;buff_data[15]=0b00000000;buff_data[23]=0b00000000;buff_data[31]=0b00000000;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
     buff_data[0]=0b00110000;buff_data[8] =0b00000000;buff_data[16]=0b01100000;buff_data[24]=0b00000000;
     buff_data[1]=0b00000000;buff_data[9] =0b00000000;buff_data[17]=0b00000000;buff_data[25]=0b01111110;
     buff_data[2]=0b00000000;buff_data[10]=0b00000000;buff_data[18]=0b00000000;buff_data[26]=0b01000010;
@@ -236,7 +237,7 @@ while(1) {
     buff_data[6]=0b00000100;buff_data[14]=0b00000000;buff_data[22]=0b00000000;buff_data[30]=0b01111110;
     buff_data[7]=0b00000000;buff_data[15]=0b00000000;buff_data[23]=0b00000000;buff_data[31]=0b00000000;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
     buff_data[0]=0b00010000;buff_data[8] =0b00000000;buff_data[16]=0b01100001;buff_data[24]=0b00000000;
     buff_data[1]=0b00000000;buff_data[9] =0b00000000;buff_data[17]=0b00000000;buff_data[25]=0b01111110;
     buff_data[2]=0b00000000;buff_data[10]=0b00000000;buff_data[18]=0b00000000;buff_data[26]=0b01000010;
@@ -246,7 +247,7 @@ while(1) {
     buff_data[6]=0b00000000;buff_data[14]=0b00000000;buff_data[22]=0b00000000;buff_data[30]=0b01111110;
     buff_data[7]=0b00010000;buff_data[15]=0b00000000;buff_data[23]=0b00000000;buff_data[31]=0b00000000;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
 
 
     buff_data[0]=0b00000000;buff_data[8] =0b00000001;buff_data[16]=0b01100010;buff_data[24]=0b11111111;
@@ -258,7 +259,7 @@ while(1) {
     buff_data[6]=0b00000000;buff_data[14]=0b01000000;buff_data[22]=0b00000000;buff_data[30]=0b10000001;
     buff_data[7]=0b00000001;buff_data[15]=0b10000000;buff_data[23]=0b00000000;buff_data[31]=0b11111111;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
     buff_data[0]=0b00000000;buff_data[8] =0b00000001;buff_data[16]=0b01100100;buff_data[24]=0b11111111;
     buff_data[1]=0b00000000;buff_data[9] =0b00000010;buff_data[17]=0b00000000;buff_data[25]=0b10000001;
     buff_data[2]=0b00000000;buff_data[10]=0b00000100;buff_data[18]=0b00000000;buff_data[26]=0b10000001;
@@ -268,7 +269,7 @@ while(1) {
     buff_data[6]=0b00000000;buff_data[14]=0b01000000;buff_data[22]=0b00000000;buff_data[30]=0b10000001;
     buff_data[7]=0b10000000;buff_data[15]=0b10000000;buff_data[23]=0b00000000;buff_data[31]=0b11111111;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
     buff_data[0]=0b00110000;buff_data[8] =0b00000001;buff_data[16]=0b01101000;buff_data[24]=0b11111111;
     buff_data[1]=0b00000000;buff_data[9] =0b00000010;buff_data[17]=0b00000000;buff_data[25]=0b10000001;
     buff_data[2]=0b00000000;buff_data[10]=0b00000100;buff_data[18]=0b00000000;buff_data[26]=0b10000001;
@@ -278,7 +279,7 @@ while(1) {
     buff_data[6]=0b00000100;buff_data[14]=0b01000000;buff_data[22]=0b00000000;buff_data[30]=0b10000001;
     buff_data[7]=0b00000000;buff_data[15]=0b10000000;buff_data[23]=0b00000000;buff_data[31]=0b11111111;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
     buff_data[0]=0b00111000;buff_data[8] =0b00000001;buff_data[16]=0b01110000;buff_data[24]=0b11111111;
     buff_data[1]=0b00001000;buff_data[9] =0b00000010;buff_data[17]=0b00000000;buff_data[25]=0b10000001;
     buff_data[2]=0b00000000;buff_data[10]=0b00000100;buff_data[18]=0b00000000;buff_data[26]=0b10000001;
@@ -288,38 +289,9 @@ while(1) {
     buff_data[6]=0b00000000;buff_data[14]=0b01000000;buff_data[22]=0b00000000;buff_data[30]=0b10000001;
     buff_data[7]=0b00010000;buff_data[15]=0b10000000;buff_data[23]=0b00000000;buff_data[31]=0b11111111;
     build_buffer();
-    HAL_Delay(ANIMDELAY);
+    DelayMS(ANIMDELAY);
 }
 
-}
-
-
-void SystemClock_Config(void)
-{
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-
-  HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
-
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK|RCC_CLOCKTYPE_PCLK1;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
-  {
-    Error_Handler();
-  }
 }
 
 
