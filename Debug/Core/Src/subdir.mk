@@ -4,7 +4,9 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/Src/buff.c \
 ../Core/Src/delay.c \
+../Core/Src/hw.c \
 ../Core/Src/main.c \
 ../Core/Src/rcc.c \
 ../Core/Src/stm32g0xx_it.c \
@@ -14,7 +16,9 @@ C_SRCS += \
 ../Core/Src/systick.c 
 
 OBJS += \
+./Core/Src/buff.o \
 ./Core/Src/delay.o \
+./Core/Src/hw.o \
 ./Core/Src/main.o \
 ./Core/Src/rcc.o \
 ./Core/Src/stm32g0xx_it.o \
@@ -24,7 +28,9 @@ OBJS += \
 ./Core/Src/systick.o 
 
 C_DEPS += \
+./Core/Src/buff.d \
 ./Core/Src/delay.d \
+./Core/Src/hw.d \
 ./Core/Src/main.d \
 ./Core/Src/rcc.d \
 ./Core/Src/stm32g0xx_it.d \
@@ -35,8 +41,12 @@ C_DEPS += \
 
 
 # Each subdirectory must supply rules for building sources it contributes
+Core/Src/buff.o: ../Core/Src/buff.c
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m0plus -std=gnu11 -g3 -DSTM32G071xx -DDEBUG -c -I../Core/Inc -I../Drivers/CMSIS/Device/ST/STM32G0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/buff.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Core/Src/delay.o: ../Core/Src/delay.c
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m0plus -std=gnu11 -g3 -DSTM32G071xx -DDEBUG -c -I../Core/Inc -I../Drivers/CMSIS/Device/ST/STM32G0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/delay.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
+Core/Src/hw.o: ../Core/Src/hw.c
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m0plus -std=gnu11 -g3 -DSTM32G071xx -DDEBUG -c -I../Core/Inc -I../Drivers/CMSIS/Device/ST/STM32G0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/hw.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Core/Src/main.o: ../Core/Src/main.c
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m0plus -std=gnu11 -g3 -DSTM32G071xx -DDEBUG -c -I../Core/Inc -I../Drivers/CMSIS/Device/ST/STM32G0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Core/Src/rcc.o: ../Core/Src/rcc.c

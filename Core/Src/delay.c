@@ -11,8 +11,7 @@
 void DelayMS(uint32_t Delay)
 {
   uint32_t tickstart = tick;
-  while ((tick - tickstart) < Delay)
-  {
+  while ((tick - tickstart) < Delay) {
   }
 }
 

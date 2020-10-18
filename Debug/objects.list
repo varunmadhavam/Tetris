@@ -1,4 +1,6 @@
+"Core/Src/buff.o"
 "Core/Src/delay.o"
+"Core/Src/hw.o"
 "Core/Src/main.o"
 "Core/Src/rcc.o"
 "Core/Src/stm32g0xx_it.o"

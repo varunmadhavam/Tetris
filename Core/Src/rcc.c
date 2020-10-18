@@ -7,7 +7,7 @@
 #include "stm32g0xx.h"
 #include "system_stm32g0xx.h"
 
-void sysclock_config(void){
+void sysclock_config(void) {
 	//select voltage scaling range 1 for high frequency operation.
 	PWR->CR1  |= 1<<9;
 
